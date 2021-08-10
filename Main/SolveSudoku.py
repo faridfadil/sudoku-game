@@ -1,4 +1,4 @@
-# Solve the Sudoku
+# Class containing Sudoku Solver backtacking algorithm 
 class SolveSudoku():
     
     def __init__(self):
