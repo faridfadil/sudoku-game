@@ -60,7 +60,6 @@ def fill_grid(grid, chance_to_place):
         for row in range(GRID_SIZE):
             #random number generator from 1 to 100
             random_roll = random.randint(0, 100)
-
             #if number rolled is less than given chance
             if random_roll < chance_to_place:
                 # then place a number randomly chosen from the number_choices.
@@ -71,7 +70,6 @@ def fill_grid(grid, chance_to_place):
     return grid
 
 def is_valid(grid, row, column):
-
     for n in range(GRID_SIZE):
         if grid[row][n] in number_choices or grid[n][column] in number_choices:
             return False
@@ -80,10 +78,9 @@ def is_valid(grid, row, column):
     
 
 
-
-for column in range(GRID_SIZE):
-    for row in range(GRID_SIZE):
-        print(f"{is_valid(sudoku_grid, row, column)} at point ({row}, {column})")
+column = 1
+row = 0
+print(sudoku_grid[row][column])
 
 
             
