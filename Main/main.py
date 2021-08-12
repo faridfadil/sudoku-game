@@ -1,9 +1,11 @@
 from tkinter import *
+import random
 
+# main class to handle GUI. 
 class MainWindow():
     
     def __init__(self, gui):
-        # setting GUI title and settings 
+        # setting GUI title and settings.
         self.gui = gui
         gui.title("Sudoku Solver by Farid & Jerin")
         gui.geometry('270x320')  
@@ -12,7 +14,7 @@ class MainWindow():
         #setting background colour of GUI. 
         color = 'white'
 
-        # the grid that will be displayed on the GUI
+        # the 9x9 grid that will be displayed on the GUI. This grid is different from main_sudoku_grid as it is the front-end component. 
         self.gui_grid = [
             [0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -25,7 +27,7 @@ class MainWindow():
             [0, 0, 0, 0, 0, 0, 0, 0, 0],
         ]
 
-        #setting the colours of the grid
+        #setting the colours of the GUI grid.
         for row in range(GRID_SIZE):
             for column in range(GRID_SIZE):
 
@@ -45,7 +47,7 @@ class MainWindow():
                 self.gui_grid[row][column].grid(row=row, column=column)
 
 
-        # menu dropdown for the commands in the top left corner. 
+        # menu dropdown for player controls in the top left corner. 
         menu = Menu(gui)
         gui.config(menu = menu)
        
@@ -55,11 +57,14 @@ class MainWindow():
         file.add_command(label = 'Solve', command = self.solve_grid)
         file.add_command(label = 'Clear', command = self.clear_grid)
 
+        #NOTE ammend this function so that VALID numbers are placed on the grid. 
+        self.fill_grid(chance_to_place = 20)
+
 
     # ammend the cells in the grid if values are incorrect. 
     def ammend_grid(self, event):
-        for row in range(9):
-            for column in range(9):
+        for row in range(GRID_SIZE):
+            for column in range(GRID_SIZE):
                 if main_sudoku_grid[row][column].get() == '':
                     continue
                 #if the number in the cell is a 2 digit number or is not in the choices of numbers from 1-9, then set the cell as empty. 
@@ -69,14 +74,29 @@ class MainWindow():
 
     # clear grid.
     def clear_grid(self):
-        for row in range(9):
-            for column in range(9):
+        for row in range(GRID_SIZE):
+            for column in range(GRID_SIZE):
                 main_sudoku_grid[row][column].set('')
 
 
     # Calls the class SolveSudoku
     def solve_grid(self):
         solution = SolveSudoku()  
+    
+    def fill_grid(self, chance_to_place = 0):
+        number_choices = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        #nested for loop for the 9x9 grid.
+        for column in range(GRID_SIZE):
+            for row in range(GRID_SIZE):
+                #random number generator from 1 to 100
+                random_roll = random.randint(0, 100)
+                #if number rolled is less than given chance
+                if random_roll < chance_to_place:
+                    # then place a number randomly chosen from the number_choices.
+                    main_sudoku_grid[row][column].set(random.choice(number_choices))
+                else:
+                    # otherwise, then put it in 0
+                    main_sudoku_grid[row][column].set(0)
 
 # Class containing Sudoku Solver backtacking algorithm 
 class SolveSudoku():
@@ -142,6 +162,7 @@ class SolveSudoku():
         
         return True
 
+# our main 9x9 sudoku grid
 main_sudoku_grid = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -154,17 +175,24 @@ main_sudoku_grid = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
 ]
 
-root = Tk()
-Label(root, text = "Press File in the top left corner for commands",font = ('Helvetica 9 bold')).place( x = 5, y = 290)
-# Setting all the cells in the grid to be StringVar class so we can use .set() and .get() on each grid 
-# to fill in values. 
-for row in range(0,9):
-    for column in range(0,9):
-        main_sudoku_grid[row][column] = StringVar(root)
-
+# constant that stores the size of the grid. 
 GRID_SIZE = 9
 
+# creating the main tkinter window for the GUI application.
+root = Tk()
+
+# creating label below the grid in the GUI for instructions for player controls. 
+Label(root, text = "Press File in the top left corner for commands",font = ('Helvetica 9 bold')).place( x = 5, y = 290)
+
+# Setting all the cells in the grid to be StringVar class so we can use .set() and .get() on each grid to fill in values.
+for row in range(GRID_SIZE):
+    for column in range(GRID_SIZE):
+        main_sudoku_grid[row][column] = StringVar(root)
+
+# passing the main root window into the MainWindow class for actual GUI construction. 
 sudoku_application = MainWindow(root)
+
+# running tkinter mainloop to display GUI
 root.mainloop()
 
 

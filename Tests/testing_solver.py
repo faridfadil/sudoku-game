@@ -50,11 +50,12 @@ sudoku_grid = [
 #chance to place a number, higher the value, the easier it is for the sudoku to be solved
 chance = 100
 #choices of numbers 
-number_choices = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
 #constant variable of grid size
 GRID_SIZE = 9
 
 def fill_grid(grid, chance_to_place):
+    number_choices = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     #nested for loop for the 9x9 grid.
     for column in range(GRID_SIZE):
         for row in range(GRID_SIZE):
