@@ -3,8 +3,8 @@
 
 #nested for loop
 # for x in range(1, 10):
-#     for y in range(1, 10):
-#         print(f"column (x): {x}, row (y): {y}")
+#     for y i range(1, 10):
+#         print(f"column (x): {x}, row (y): {y}")n
 import random
 
 
@@ -77,12 +77,15 @@ def is_valid(grid, row, column):
 
     return True
     
+#testing random shuffle function to shuffle first row of sudoku grid
+def random_shuffle():
+    number_list = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    number_choice = random.sample(number_list, len(number_list))
+    return number_choice
 
-
-column = 1
-row = 0
-print(sudoku_grid[row][column])
-
+#printing the result of the random_shuffle function
+for x in range(10):
+    print(random_shuffle())
 
             
 
