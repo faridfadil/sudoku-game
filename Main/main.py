@@ -89,10 +89,7 @@ class MainWindow():
         file.add_command(label = 'New Grid', command = self.generate_new_grid)
 
         # generate new grid function
-        self.generate_new_grid()
-        print(self.correct_solution_grid)
-        
-
+        self.generate_new_grid()     
 
 
     # ammend the cells in the grid if values are incorrect. 
@@ -165,7 +162,6 @@ class MainWindow():
             self.solution_status.set(f"Game State: {self.SOLVED}")
         else:
             self.solution_status.set(f"Game State: {self.INCORRECT}")
-        print(self.solution_status)
             
 
     
@@ -185,7 +181,7 @@ class SolveSudoku():
                 if main_sudoku_grid[row][column].get() not in ['1','2','3','4','5','6','7','8','9']:
                     main_sudoku_grid[row][column].set(0)
 
-    
+
     
     # MAIN BACKTRACKING ALGORITHM
     def sudoku_solve(self, i=0, j=0):
