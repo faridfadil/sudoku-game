@@ -4,8 +4,9 @@ import random
 # constant that stores the size of the grid. 
 GRID_SIZE = 9
 # creating the main tkinter window for the GUI application named root.
-root = Tk()    
-
+root = Tk()
+p1 = PhotoImage(file = 'sudoku.png')
+root.iconphoto(False, p1)
 # main class to handle GUI. 
 class MainWindow():
     
@@ -18,10 +19,11 @@ class MainWindow():
         self.solution_status = StringVar(gui)
         # setting GUI title and settings.
         self.gui = gui
-        gui.title("Sudoku Solver by Farid & Jerin")
+        gui.title("Sudoku Solver")
         #setting gui dimensions
         self.width, self.height = width, height
-        gui.geometry(f'{width}x{height}')  
+   
+        gui.geometry(f'{width}x{420}')  
 
         #setting font used in GUI
         font = ('Arial', 18)
@@ -29,9 +31,12 @@ class MainWindow():
         color = 'white'
 
         # creating label below the grid in the GUI for instructions for player controls. 
-        Label(root, text = "Press File in the top left corner for commands",font = ('Helvetica 9 bold')).place( x = 5, y = 290)
-        Label(root, textvariable = self.solution_status, fg='gray',font = ('Helvetica 9 bold')).place( x = self.width/4-20, y = self.height-30)
-
+        Label(root, text = "Generate New Grid",font = ('Helvetica 11 bold')).place( x = 60, y = 290)
+        Button(root, text = 'Easy', command  = self.generate_new_grid, bg = 'black', fg = 'white' ).place( x = 20, y = 320)
+        Button(root, text = 'Medium', command  = self.generate_new_gridm, bg = 'black', fg = 'white').place( x = 103, y = 320)
+        Button(root, text = 'Hard', command  = self.generate_new_gridh, bg = 'black', fg = 'white').place( x = 210, y = 320)
+        Button(root, text = 'Check Solution', command  = self.check_solution, bg = 'black', fg = 'white').place( x = 85, y = 360)
+        Label(root, textvariable = self.solution_status, fg='grey',font = ('Helvetica 9 bold')).place( x = self.width/4-5, y = self.height+50)
         # the 9x9 grid that will be displayed on the GUI. This grid is different from main_sudoku_grid as it is the front-end component. 
         self.gui_grid = [
             [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -78,18 +83,12 @@ class MainWindow():
                 self.gui_grid[row][column].grid(row=row, column=column)
 
 
-        # menu dropdown for player controls in the top left corner. 
-        menu = Menu(self.gui)
-        self.gui.config(menu = menu)
-       
-        file = Menu(menu)
-        menu.add_cascade(label = 'File', menu = file)
-        file.add_command(label = 'Exit', command = gui.quit)
-        file.add_command(label = 'Check Solution', command = self.check_solution)
-        file.add_command(label = 'New Grid', command = self.generate_new_grid)
 
         # generate new grid function
-        self.generate_new_grid()     
+        self.generate_new_grid()
+        print(self.correct_solution_grid)
+        
+
 
 
     # ammend the cells in the grid if values are incorrect. 
@@ -115,8 +114,22 @@ class MainWindow():
         self.randomize_top_row()
         self.solve_grid()
         self.save_grid()
-        self.hide_solution()
+        self.hide_solutione()
         self.solution_status.set(f"Game State: {self.NOT_SOLVED}")
+    def generate_new_gridm(self):
+        self.clear_grid()
+        self.randomize_top_row()
+        self.solve_grid()
+        self.save_grid()
+        self.hide_solutionm()
+        self.solution_status.set(f"Game State: {self.NOT_SOLVED}")
+    def generate_new_gridh(self):
+        self.clear_grid()
+        self.randomize_top_row()
+        self.solve_grid()
+        self.save_grid()
+        self.hide_solutionh()
+        self.solution_status.set(f"Game State: {self.NOT_SOLVED}")        
 
     # Calls the class SolveSudoku
     def solve_grid(self):
@@ -131,8 +144,28 @@ class MainWindow():
             main_sudoku_grid[0][n].set(number_choice[n])
     
     # replace slots that are chosen at random with empty cells. 
-    def hide_solution(self):
-        CHANCE_TO_HIDE = 85 # how frequent should the cells be made empty per loop iteration?
+    def hide_solutione(self):
+        CHANCE_TO_HIDE = 63 # how frequent should the cells be made empty per loop iteration?
+        for column in range(GRID_SIZE):
+            for row in range(GRID_SIZE):
+                #random number generator from 1 to 100
+                random_roll = random.randint(0, 100)
+                #if number rolled is less than given chance
+                if random_roll < CHANCE_TO_HIDE:
+                    # then set the current cell to be none
+                    main_sudoku_grid[row][column].set('')
+    def hide_solutionm(self):
+        CHANCE_TO_HIDE = 77 # how frequent should the cells be made empty per loop iteration?
+        for column in range(GRID_SIZE):
+            for row in range(GRID_SIZE):
+                #random number generator from 1 to 100
+                random_roll = random.randint(0, 100)
+                #if number rolled is less than given chance
+                if random_roll < CHANCE_TO_HIDE:
+                    # then set the current cell to be none
+                    main_sudoku_grid[row][column].set('')
+    def hide_solutionh(self):
+        CHANCE_TO_HIDE = 87 # how frequent should the cells be made empty per loop iteration?
         for column in range(GRID_SIZE):
             for row in range(GRID_SIZE):
                 #random number generator from 1 to 100
@@ -162,6 +195,7 @@ class MainWindow():
             self.solution_status.set(f"Game State: {self.SOLVED}")
         else:
             self.solution_status.set(f"Game State: {self.INCORRECT}")
+        print(self.solution_status)
             
 
     
@@ -181,7 +215,7 @@ class SolveSudoku():
                 if main_sudoku_grid[row][column].get() not in ['1','2','3','4','5','6','7','8','9']:
                     main_sudoku_grid[row][column].set(0)
 
-
+    
     
     # MAIN BACKTRACKING ALGORITHM
     def sudoku_solve(self, i=0, j=0):
@@ -258,6 +292,3 @@ sudoku_application = MainWindow(root, 270, 340)
 
 # running tkinter mainloop to display GUI
 root.mainloop()
-
-
-
