@@ -1,5 +1,4 @@
 ![](readmeimgs/githubbanner.png)
-# Python Sudoku Game
 
 ### About
 A Sudoku game written in Python 3.9 for our Networking and Cybersecurity Python unit class. The code relies on native python libraries tkinter and random for graphics and logic respectively. 
