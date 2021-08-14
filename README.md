@@ -4,7 +4,7 @@
 A Sudoku game written in Python 3.9 for our Networking and Cybersecurity Python unit class. The code relies on native python libraries tkinter and random for graphics and logic respectively. 
 The program's GUI has difficulty options for Easy, Medium and Hard. The harder the difficulty, the less numbers are displayed on the screen, the easier the difficulty, the more 
 numbers are displayed on the screen. Once you have solved the sudoku, you can check if you got it right by clicking on the "Check Solution" button where the program checks your
-inputs against the correct solution and changes the "Game State" below the Check Solution button accordingly- "Correct" if you solved it correctly and "Incorrect" if you didn't. 
+inputs against the correct solution and changes the "Game State" below the Check Solution button accordingly- "Solved" if you solved it correctly and "Incorrect" if you didn't. 
 Note that each time you click on the difficulty buttons, a new grid will generate, erasing any progress you made in the prior grid. 
 
 ![](readmeimgs/sudokusolver.jpg)
