@@ -86,7 +86,6 @@ class MainWindow():
 
         # generate new grid function
         self.generate_new_grid()
-        print(self.correct_solution_grid)
         
 
 
@@ -195,7 +194,6 @@ class MainWindow():
             self.solution_status.set(f"Game State: {self.SOLVED}")
         else:
             self.solution_status.set(f"Game State: {self.INCORRECT}")
-        print(self.solution_status)
             
 
     
